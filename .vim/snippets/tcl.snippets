@@ -1,0 +1,240 @@
+# #!/usr/bin/tclsh
+snippet #!
+	#!/usr/bin/tclsh
+	
+# Process
+snippet pro
+	proc ${1:function_name} {${2:args}} {
+		${3:#}
+	}
+#xif
+snippet xif
+	${1:expr}? ${2:true} : ${3:false}
+# Conditional
+snippet if
+	if {${1}} {
+		${2:# body...}
+	}
+# Conditional if..else
+snippet ife
+	if {${1}} {
+		${2:# body...}
+	} else {
+		${3:# else...}
+	}
+# Conditional if..elsif..else
+snippet ifee
+	if {${1}} {
+		${2:# body...}
+	} elseif {${3}} {
+		${4:# elsif...}
+	} else {
+		${5:# else...}
+	}
+# If catch then
+snippet ifc
+	if { [catch {${1:#do something...}} ${2:err}] } {
+		${3:# handle failure...}
+	}
+# Catch
+snippet catch
+	catch {${1}} ${2:err} ${3:options}
+# While Loop
+snippet wh
+	while {${1}} {
+		${2:# body...}
+	}
+# For Loop
+snippet for
+	for {set ${2:i} 0} {$$2 < ${1:count}} {${3:incr} $2} {
+		${4:# body...}
+	}
+# Foreach Loop
+snippet fore
+	foreach ${1:x} ${2:#list} {
+		${3:# body...}
+	}
+# after ms script...
+snippet af
+	after ${1:ms} ${2:#do something}
+# after cancel id
+snippet afc
+	after cancel ${1:id or script}
+# after idle
+snippet afi
+	after idle ${1:script}
+# after info id
+snippet afin
+	after info ${1:id}
+# Expr
+snippet exp
+	expr {${1:}}
+# Switch1
+snippet sw1
+	switch ${1:var} {
+		${3:pattern 1} {
+			${4:#do something}
+		}
+		default {
+			${2:#do something}
+		}
+	}
+# Switch2
+snippet sw2
+	switch ${1:var} {
+		${3:pattern 1} {
+			${4:#do something}
+		}
+		${5:pattern 2} {
+			${6:#do something}
+		}
+		default {
+			${2:#do something}
+		}
+	}
+# Switch3
+snippet sw3
+	switch ${1:var} {
+		${3:pattern 1} {
+			${4:#do something}
+		}
+		${5:pattern 2} {
+			${6:#do something}
+		}
+		${7:pattern 3} {
+			${8:#do something}
+		}
+		default {
+			${2:#do something}
+		}
+	}
+# Switch4
+snippet sw4
+	switch ${1:var} {
+		${3:pattern 1} {
+			${4:#do something}
+		}
+		${5:pattern 2} {
+			${6:#do something}
+		}
+		${7:pattern 3} {
+			${8:#do something}
+		}
+		${9:pattern 4} {
+			${10:#do something}
+		}
+		default {
+			${2:#do something}
+		}
+	}
+# Case
+snippet ca
+	${1:pattern} {
+		${2:#do something}
+	}${3}
+# Namespace eval
+snippet ns
+	if {[namespace exist ${1:PATH}]} {
+		namespace delete $1;
+	}
+	namespace eval $1 {
+		${2:#}
+	}
+# Namespace current
+snippet nsc
+	namespace current
+# HWT GUI
+# frame
+snippet frm
+	set frm_${1:mainWnd} [frame $${2:base}.frm_$1];
+	pack $frm_$1 -side ${3:top};
+# labelframe
+snippet lbfrm
+	set lbfrm_${1:workFrame} [labelframe ${2:base}.lbfrm_$1 -text "${3:labelframe}"];
+	pack $lbfrm_$1 -side ${4:top} -fill ${5:both} -expand ${6:1} -anchor ${7:nw};
+# AddPadding
+snippet addpadx
+	AddPadding $frm_${1:mainWnd} -width [DluWidth ${2:4}] -side ${3:left};
+snippet addpady
+	AddPadding $frm_${1:mainWnd} -height [DluHeight ${2:4}] -side ${3:top};
+# label
+snippet label
+	set lab_${1:name} [label $${2:base}.lab_$1 \
+		-text "${3:label}" \
+		-width [hwt::DluWidth ${4:12}] \
+		];
+	$lab_$1 configure -anchor ${5:w};
+	pack $lab_$1 -side left;
+# CanvasButton
+snippet btn
+	set btn_${1:name} [hwt::CanvasButton $frm_${2:mainWnd}.btn_$1 \
+		[DluWidth 60] [DluHeight 14] \
+		text "${3:Button}" \
+		command "${4:${cur_ns}}::${5:command}" \
+		takefocus 1 \
+		];
+	pack $btn_$1 -side ${6:left};
+# AddEntry
+snippet addent
+	set ent_${1:entname} [hwt::AddEntry $frm_${2:mainWnd}.ent_$1 \
+		label "${3:labelname}" \
+		labelWidth [hwt::DluWidth ${4:12}] \
+		entryWidth [DluWidth ${5:20}] \
+		textvariable "${6:${cur_ns}}::${7:variable}" \
+		validate ${8:real} \
+		state ${9:normal} \
+		];
+	pack $ent_$1 -side ${10:top};
+# CreateWindow
+snippet createw
+	set window_${1:name} [hwt::CreateWindow window_$1 \
+		windowTitle "${2:windowname}" \
+		geometry ${3:600}x${4:480}+${5:20}+${6:20} \
+		acceptButton "${7:Apply}" \
+		acceptFunc "${8:${cur_ns}}::${9:command}" \
+		propagate ${10:0} \
+		noCancel \
+		post \
+		];
+# collectorcreate
+snippet col
+	set col_${1:name} [::esgCN::HmCollector new $frm_${2:mainWnd}.col_$1 \
+		-entity ${3:type} \
+		-markid ${4:1} \
+		-types [list $3] \
+		];
+snippet hm_createmarkid
+	hm_createmark ${1:elems} ${2:1} "by id only" ${3};
+snippet hm_createmarkname
+	hm_createmark ${1:elems} ${2:1} "by name only" ${3};
+snippet hm_createmarkby
+	hm_createmark ${1:nodes} ${2:1} "by ${3:elem id}" ${4:[hm_getmark elems 1]};
+snippet hm_createmarkall
+	hm_createmark ${1:elems} ${2:1} "advanced" ${3:all};
+snippet hm_elemlist
+	hm_elemlist ${1:id} "${2}"
+#
+snippet hm_appendmarkid
+	hm_appendmark ${1:elems} ${2:1} "by id only" ${3};
+snippet hm_appendmarkname
+	hm_appendmark ${1:elems} ${2:1} "by name only" ${3};
+snippet hm_appendmarkby
+	hm_appendmark ${1:nodes} ${2:1} "by ${3:elem id}" ${4:[hm_getmark elems 1]};
+snippet concat
+	set ${1:lst} [concat $$1 ${2}]
+snippet performance
+	proc Performance { state args } {
+		if {$state == "on"} {
+			hm_commandfilestate 0
+			*entityhighlighting 0
+			hm_blockredraw 1
+			hm_blockmessages 1
+			hm_blockerrormessages 1
+		} else {
+			*entityhighlighting 1
+			hm_blockredraw 0
+			hm_blockmessages 0
+			hm_blockerrormessages 0
+			hm_commandfilestate 1
+		}
+	}
