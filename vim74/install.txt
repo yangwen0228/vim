@@ -1,0 +1,7 @@
+click install.exe
+
+choose 1 to disable create .bat files
+
+choose d <do it> to create edit items in right click popup menu entries.
+
+Enjoy.
