@@ -36,7 +36,7 @@ if (g:iswindows && g:isGUI)
     behave mswin
     set diffexpr=MyDiff()
 
-    function MyDiff()
+    function! MyDiff()
         let opt = '-a --binary '
         if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
         if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
@@ -139,7 +139,8 @@ Bundle 'ccvext.vim'
 Bundle 'cSyntaxAfter'
 Bundle 'ctrlpvim/ctrlp.vim'
 Bundle 'EasyGrep'
-Bundle 'solarized'
+Bundle 'aceofall/gtags.vim'
+Bundle 'altercation/vim-colors-solarized'
 Bundle 'mattn/emmet-vim'
 Bundle 'Yggdroot/indentLine'
 Bundle 'vim-javacompleteex'
@@ -857,42 +858,54 @@ au BufRead,BufNewFile *.txt setlocal ft=txt
 " =============================================================================
 "                          << 以下为常用工具配置 >>
 " =============================================================================
+" -----------------------------------------------------------------------------
+"  < gtags 工具配置 >
+" -----------------------------------------------------------------------------
+" gtags = ctags + cscope
+set cscopetag " 使用 cscope 作为 tags 命令
+set cscopeprg='gtags-cscope' " 使用 gtags-cscope 代替 cscope
+
+
+" gtags.vim 设置项
+let GtagsCscope_Auto_Load = 1
+let CtagsCscope_Auto_Map = 1
+let GtagsCscope_Quiet = 1
 
 " -----------------------------------------------------------------------------
 "  < cscope 工具配置 >
 " -----------------------------------------------------------------------------
 " 用Cscope自己的话说 - "你可以把它当做是超过频的ctags"
-if has("cscope")
-    "设定可以使用 quickfix 窗口来查看 cscope 结果
-    set cscopequickfix=s-,c-,d-,i-,t-,e-
-    "使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳转
-    set cscopetag
-    "如果你想反向搜索顺序设置为1
-    set csto=0
-    "在当前目录中添加任何数据库
-    if filereadable("cscope.out")
-        cs add cscope.out
-    "否则添加数据库环境中所指出的
-    elseif $CSCOPE_DB != ""
-        cs add $CSCOPE_DB
-    endif
-    set cscopeverbose
-    "快捷键设置
-    nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
-    nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
-    nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
-    nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
-endif
+" if has("cscope")
+    " "设定可以使用 quickfix 窗口来查看 cscope 结果
+    " set cscopequickfix=s-,c-,d-,i-,t-,e-
+    " "使支持用 Ctrl+]  和 Ctrl+t 快捷键在代码间跳转
+    " set cscopetag
+    " "如果你想反向搜索顺序设置为1
+    " set csto=0
+    " "在当前目录中添加任何数据库
+    " if filereadable("cscope.out")
+        " cs add cscope.out
+    " "否则添加数据库环境中所指出的
+    " elseif $CSCOPE_DB != ""
+        " cs add $CSCOPE_DB
+    " endif
+    " set cscopeverbose
+    " "快捷键设置
+    " nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+    " nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+    " nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+    " nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+    " nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+    " nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+    " nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+    " nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+" endif
 
 " -----------------------------------------------------------------------------
 "  < ctags 工具配置 >
 " -----------------------------------------------------------------------------
 " 对浏览代码非常的方便,可以在函数,变量之间跳转等
-set tags=./tags;                            "向上级目录递归查找tags文件（好像只有在Windows下才有用）
+" set tags=./tags;                            "向上级目录递归查找tags文件（好像只有在Windows下才有用）
 
 " -----------------------------------------------------------------------------
 "  < gvimfullscreen 工具配置 > 请确保已安装了工具
