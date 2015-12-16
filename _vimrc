@@ -1,10 +1,14 @@
 " =============================================================================
-"                          << 设置全局路径变量 >>
+"                          << 设置全局变量 >>
 " =============================================================================
 " {{{
+    let mapleader = ","
+    let g:mapleader = ","
     let g:tempfilesdir = $VIM . "/vimfiles/tempfiles"
     let g:personaldir = $VIM . "/vimfiles/personal"
+    let g:utilsdir = $VIM . "/vimfiles/utils"
 " }}}
+
 
 " =============================================================================
 "        << 判断操作系统是 Windows 还是 Linux 和判断是终端还是 Gvim >>
@@ -80,15 +84,6 @@
 " -----------------------------------------------------------------------------
 "  {{{
     if g:islinux
-        set hlsearch        "高亮搜索
-        set incsearch       "在输入要搜索的文字时，实时匹配
-
-        " Uncomment the following to have Vim jump to the last position when
-        " reopening a file
-        if has("autocmd")
-            au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
-        endif
-
         if g:isGUI
             " Source a global configuration file if available
             if filereadable("/etc/vim/gvimrc.local")
@@ -98,16 +93,6 @@
             " This line should not be removed as it ensures that various options are
             " properly set to work with the Vim-related packages available in Debian.
             runtime! debian.vim
-
-            " Vim5 and later versions support syntax highlighting. Uncommenting the next
-            " line enables syntax highlighting by default.
-            if has("syntax")
-                syntax on
-            endif
-
-            set mouse=a                    " 在任何模式下启用鼠标
-            set t_Co=256                   " 在终端启用256色
-            set backspace=2                " 设置退格键可用
 
             " Source a global configuration file if available
             if filereadable("/etc/vim/vimrc.local")
@@ -125,7 +110,7 @@
     if (g:iswindows)
         set encoding=utf-8                                    "设置gvim内部编码，默认不更改
         set fileencoding=utf-8                                "设置当前文件编码，可以更改，如：gbk（同cp936）
-        set fileencodings=ucs-bom,utf-8,gbk,cp936,latin-1     "设置支持打开的文件的编码
+        set fileencodings=utf-8,cp936,ucs-bom,gbk,latin-1     "设置支持打开的文件的编码
 
         " 文件格式，默认 ffs=dos,unix
         set fileformat=unix                                   "设置新（当前）文件的<EOL>格式，可以更改，如：dos（windows系统常用）
@@ -133,7 +118,7 @@
     else
         set encoding=utf-8                                    "设置gvim内部编码，默认不更改
         set fileencoding=utf-8                                "设置当前文件编码，可以更改，如：gbk（同cp936）
-        set fileencodings=ucs-bom,utf-8,gbk,cp936,latin-1     "设置支持打开的文件的编码
+        set fileencodings=utf-8,ucs-bom,gbk,cp936,latin-1     "设置支持打开的文件的编码
 
         " 文件格式，默认 ffs=dos,unix
         set fileformat=unix                                   "设置新（当前）文件的<EOL>格式，可以更改，如：dos（windows系统常用）
@@ -154,6 +139,25 @@
 "      < 编写文件时的配置 >
 " -----------------------------------------------------------------------------
 "  {{{
+    set hlsearch        "高亮搜索
+    set incsearch       "在输入要搜索的文字时，实时匹配
+
+    " Uncomment the following to have Vim jump to the last position when
+    " reopening a file
+    if has("autocmd")
+        au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+    endif
+    " Vim5 and later versions support syntax highlighting. Uncommenting the next
+    " line enables syntax highlighting by default.
+    if has("syntax")
+        syntax on
+    endif
+
+    set noundofile
+    set mouse=a                    " 在任何模式下启用鼠标
+    set t_Co=256                   " 在终端启用256色
+    set backspace=2                " 设置退格键可用
+
     set smartindent                                       "启用智能对齐方式
     set expandtab                                         "将Tab键转换为空格
     set tabstop=4                                         "设置Tab键的宽度，可以更改，如：宽度为2
@@ -165,7 +169,8 @@
     set foldexpr=1 " 折叠显示为一行
 
     " 常规模式下用空格键来开关光标行所在折叠（注：zR 展开所有折叠，zM 关闭所有折叠）
-    nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
+    " 与easymotion冲突，关掉了
+    " nnoremap <space> @=((foldclosed(line('.')) < 0) ? 'zc' : 'zo')<CR>
 
     " 当文件在外部被修改，自动更新该文件
     set autoread
@@ -193,6 +198,7 @@
     set cmdheight=2                                       "设置命令行的高度为2，默认为1
     set cursorline                                        "突出显示当前行
     set guifont=YaHei_Consolas_Hybrid:h12                 "设置字体:字号（字体名称空格用下划线代替）
+    " set guifont=Powerline\ Consolas:h12                 "设置字体:字号（字体名称空格用下划线代替）
     "set nowrap                                            "设置不自动换行
     set wrap                                              "设置自动换行
     set shortmess=atI                                     "去掉欢迎界面
@@ -242,7 +248,7 @@
     filetype off                                          "Bundle包管理加载之前，必须禁用文件类型侦测
 
     source $VIM/vimfiles/personal/select-packages.vim
-    nmap <leader>sp :e $VIM/vimfiles/personal/select-packages.vim<CR>
+    nmap <leader>es :e $VIM/vimfiles/personal/select-packages.vim<CR>
 
     filetype on                                           "启用文件类型侦测
     filetype plugin on                                    "针对不同的文件类型加载对应的插件
@@ -295,12 +301,7 @@
     " 秒内，而<Leader>cs是先按"\"键再按"c"又再按"s"键；如要修改"<leader>"键，可以把
     " 下面的设置取消注释，并修改双引号中的键为你想要的，如修改为逗号键。
 
-    let mapleader = ","
-    let g:mapleader = ","
-
-    if g:iswindows
-        " let &path = &path . "," . substitute($INCL, ';', ',', 'g')
-        set path+=$VIM/vimfiles/extra-bins/glo651wb/bin
-        cd d:/
-    endif
+if g:iswindows
+    cd d:/
+endif
 " }}}

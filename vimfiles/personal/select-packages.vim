@@ -1,6 +1,6 @@
 let s:conf_dir = g:personaldir . "/configures"
 
-function! <SID>conf_source(...) 
+function! <SID>add_plugin(...) 
     if a:0 == 0
         " no args
     else
@@ -26,63 +26,122 @@ function! <SID>conf_source(...)
     endif
 endfunction
 
-" 这个文件必须最先执行，将vundle初始化
-call <SID>conf_source('init-vundle.vim')
+command -nargs=+ -bar MyAddPlugin call <SID>add_plugin(<args>)
 
-" vundle包加载及配置，注释使插件失效
-call <SID>conf_source('init-a.vim', 'a.vim')
-call <SID>conf_source('init-ack.vim', 'mileszs/ack.vim')
-call <SID>conf_source('init-ctrlp.vim', 'ctrlpvim/ctrlp.vim')
-call <SID>conf_source('tmhedberg/matchit')
-" call <SID>conf_source('ecomba/vim-ruby-refactoring')
-" call <SID>conf_source('sunaku/vim-ruby-minitest')
-call <SID>conf_source('init-nerdtree.vim', 'scrooloose/nerdtree')
-call <SID>conf_source('init-sessions.vim', 'xolox/vim-session')
-call <SID>conf_source('xolox/vim-misc')
-call <SID>conf_source('init-easymotion.vim', 'Lokaltog/vim-easymotion')
-call <SID>conf_source('Valloric/YouCompleteMe')
+" =============================================================================
+"                          << Vundle 初始化 >>
+" =============================================================================
+" 这个文件必须最先执行，将vundle初始化
+MyAddPlugin 'init-vundle.vim'
+MyAddPlugin 'init-exec-path.vim'
+
+" =============================================================================
+"                          << 窗口布局类插件 >>
+" =============================================================================
+" MyAddPlugin 'init-sessions.vim', 'xolox/vim-session'
+MyAddPlugin 'xolox/vim-misc'
+MyAddPlugin 'init-nerdtree.vim', 'scrooloose/nerdtree'
+MyAddPlugin 'init-tagbar.vim', 'majutsushi/tagbar'
+" MyAddPlugin 'init-airline.vim', 'bling/vim-airline'
+" beated:
+MyAddPlugin 'init-powerline.vim', 'Lokaltog/vim-powerline'
+MyAddPlugin 'init-full-screen.vim'
+MyAddPlugin 'init-quickfix.vim'
+MyAddPlugin 'init-theme.vim', 'altercation/vim-colors-solarized'
+MyAddPlugin 'init-vimacs.vim', 'andrep/vimacs'
+MyAddPlugin 'init-vimtweak.vim'
+MyAddPlugin 'init-zoom-win.vim', 'ZoomWin'
+" =============================================================================
+"                          << 文件及buffer插件 >>
+" =============================================================================
+MyAddPlugin 'Shougo/unite.vim'
+MyAddPlugin 'Shougo/unite-outline'
+MyAddPlugin 'Shougo/unite-session'
+MyAddPlugin 'thinca/vim-unite-history'
+MyAddPlugin 'Shougo/neomru.vim'
+MyAddPlugin 'init-unite.vim'
+" MyAddPlugin 'init-ctrlp.vim', 'ctrlpvim/ctrlp.vim'
+" beated:
+" MyAddPlugin 'init-mru.vim', 'yegappan/mru'
+" =============================================================================
+"                          << 编辑类插件 >>
+" =============================================================================
+MyAddPlugin 'init-delimit-mate.vim', 'Raimondi/delimitMate'
+MyAddPlugin 'init-rainbow-parens.vim', 'kien/rainbow_parentheses.vim'
+MyAddPlugin 'init-surround.vim', 'tpope/vim-surround'
+MyAddPlugin 'init-repeat.vim', 'tpope/vim-repeat'
+MyAddPlugin 'init-multiple-cursors.vim', 'terryma/vim-multiple-cursors'
+MyAddPlugin 'init-easy-align.vim', 'junegunn/vim-easy-align'
+
+MyAddPlugin 'init-expand-region.vim', 'terryma/vim-expand-region'
+
+MyAddPlugin 'init-undotree.vim', 'mbbill/undotree'
+" beated:
+" MyAddPlugin 'sjl/gundo.vim'
+MyAddPlugin 'init-nerdcommenter.vim', 'scrooloose/nerdcommenter'
+" MyAddPlugin 'init-snipmate.vim', 'msanders/snipmate.vim'
+MyAddPlugin 'SirVer/ultisnips'
+MyAddPlugin 'honza/vim-snippets'
+" =============================================================================
+"                          << 搜索类插件 >>
+" =============================================================================
+MyAddPlugin 'rking/ag.vim'
+" Only use its Replace feature.
+MyAddPlugin 'EasyGrep'
+MyAddPlugin 'init-ctrlsf.vim', 'dyng/ctrlsf.vim'
+" =============================================================================
+"                          << 跳转类插件 >>
+" =============================================================================
+MyAddPlugin 'init-easymotion.vim', 'Lokaltog/vim-easymotion'
+MyAddPlugin 'kshenoy/vim-signature'
+MyAddPlugin 'init-mark.vim', 'Mark--Karkat'
+MyAddPlugin 'tmhedberg/matchit'
+MyAddPlugin 'init-gtags.vim', 'jsfaint/gen_tags.vim'
+MyAddPlugin 'init-unite-gtags.vim', 'hewes/unite-gtags'
+" beated:
+" MyAddPlugin 'init-gtags.vim', 'aceofall/gtags.vim'
+
+" MyAddPlugin 'init-ccvext.vim', 'ccvext.vim'
+" MyAddPlugin 'init-ctags.vim'
+" only to c/c++
+" MyAddPlugin 'init-ctrlp-funky.vim', 'tacahiroy/ctrlp-funky'
+" MyAddPlugin 'init-cscope.vim'
+" =============================================================================
+"                          << shell插件 >>
+" =============================================================================
+MyAddPlugin 'Shougo/vimproc.vim'
+MyAddPlugin 'Shougo/vimshell.vim'
+" =============================================================================
+"                          << 语言通用插件 >>
+" =============================================================================
+MyAddPlugin 'init-ycm.vim', 'Valloric/YouCompleteMe'
 " beated:
 " clang_complete
 " AutoComplPop
 " Supertab
 " neocomplcache
-" call <SID>conf_source('init-neocomplcache.vim', 'Shougo/neocomplcache.vim')
-
-
-
-call <SID>conf_source('init-align.vim', 'Align')
-call <SID>conf_source('init-auto-pairs.vim', 'jiangmiao/auto-pairs')
-call <SID>conf_source('init-bufexplorer.vim', 'bufexplorer.zip')
-call <SID>conf_source('init-c.vim', 'std_c.zip')
-call <SID>conf_source('init-ccvext.vim', 'ccvext.vim')
-call <SID>conf_source('init-cscope.vim')
-call <SID>conf_source('init-csyntax.vim', 'cSyntaxAfter')
-call <SID>conf_source('init-ctags.vim')
-call <SID>conf_source('init-easygrep.vim', 'EasyGrep')
-call <SID>conf_source('init-emmet.vim', 'mattn/emmet-vim')
-call <SID>conf_source('init-full-screen.vim')
-call <SID>conf_source('init-gtags.vim', 'aceofall/gtags.vim')
-call <SID>conf_source('init-html.vim')
-call <SID>conf_source('init-indent-line.vim', 'Yggdroot/indentLine')
-call <SID>conf_source('init-java-complete.vim', 'vim-javacompleteex')
-call <SID>conf_source('init-mark.vim', 'Mark--Karkat')
-
-call <SID>conf_source('init-mini-buf.vim')
-call <SID>conf_source('init-mru.vim', 'yegappan/mru')
-
-call <SID>conf_source('init-nerdcommenter.vim', 'scrooloose/nerdcommenter')
-call <SID>conf_source('init-omnicppcomplete.vim', 'OmniCppComplete')
-call <SID>conf_source('init-powerline.vim', 'Lokaltog/vim-powerline')
-call <SID>conf_source('init-quickfix.vim')
-call <SID>conf_source('init-repeat.vim', 'repeat.vim')
-call <SID>conf_source('init-snipmate.vim', 'msanders/snipmate.vim')
-call <SID>conf_source('init-src-expl.vim', 'wesleyche/SrcExpl')
-call <SID>conf_source('init-surround.vim', 'tpope/vim-surround')
-call <SID>conf_source('init-syntastic.vim', 'scrooloose/syntastic')
-call <SID>conf_source('init-tagbar.vim', 'majutsushi/tagbar')
-call <SID>conf_source('init-taglist.vim', 'taglist.vim')
-call <SID>conf_source('init-theme.vim', 'altercation/vim-colors-solarized')
-call <SID>conf_source('init-txtbrowser.vim', 'TxtBrowser')
-call <SID>conf_source('init-vimacs.vim', 'andrep/vimacs')
-call <SID>conf_source('init-vimtweak.vim')
-call <SID>conf_source('init-zoom-win.vim', 'ZoomWin')
+" MyAddPlugin 'init-neocomplcache.vim', 'Shougo/neocomplcache.vim'
+MyAddPlugin 'init-syntastic.vim', 'scrooloose/syntastic'
+MyAddPlugin 'init-quick-run.vim', 'thinca/vim-quickrun'
+" =============================================================================
+"                          << c/c++语言插件 >>
+" =============================================================================
+" MyAddPlugin 'init-a.vim', 'a.vim'
+" MyAddPlugin 'init-c.vim', 'std_c.zip'
+" MyAddPlugin 'init-csyntax.vim', 'cSyntaxAfter'
+" =============================================================================
+"                          << tcl语言插件 >>
+" =============================================================================
+MyAddPlugin 'init-syntastic-tcl.vim', 'file:///$VIM/vimfiles/vendor/syntastic-tcl'
+" =============================================================================
+"                          << python语言插件 >>
+" =============================================================================
+" =============================================================================
+"                          << 其他语言插件 >>
+" =============================================================================
+MyAddPlugin 'init-emmet.vim', 'mattn/emmet-vim'
+" MyAddPlugin 'ecomba/vim-ruby-refactoring'
+" MyAddPlugin 'sunaku/vim-ruby-minitest'
+" MyAddPlugin 'init-html.vim'
+" MyAddPlugin 'init-java-complete.vim', 'vim-javacompleteex'
+" MyAddPlugin 'init-txtbrowser.vim', 'TxtBrowser'

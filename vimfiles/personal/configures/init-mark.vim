@@ -5,10 +5,10 @@
 " {{{ plugin - mark.vim 给各种tags标记不同的颜色，便于观看调式的插件。
 " 这样，当我输入“,hl”时，就会把光标下的单词高亮，在此单词上按“,hh”会清除该单词的高亮。如果在高亮单词外输入“,hh”，会清除所有的高亮。
 " 你也可以使用virsual模式选中一段文本，然后按“,hl”，会高亮你所选中的文本；或者你可以用“,hr”来输入一个正则表达式，这会高亮所有符合这个正则表达式的文本。
-nmap <silent> <leader>hl <plug>MarkSet
-vmap <silent> <leader>hl <plug>MarkSet
-nmap <silent> <leader>hh <plug>MarkClear
-vmap <silent> <leader>hh <plug>MarkClear
+nmap <silent> <leader>hh <plug>MarkSet
+vmap <silent> <leader>hh <plug>MarkSet
+nmap <silent> <leader>hc <plug>MarkClear
+vmap <silent> <leader>hc <plug>MarkClear
 nmap <silent> <leader>hr <plug>MarkRegex
 vmap <silent> <leader>hr <plug>MarkRegex
 " 你可以在高亮文本上使用“,#”或“,*”来上下搜索高亮文本。在使用了“,#”或“,*”后，就可以直接输入“#”或“*”来继续查找该高亮文本，直到你又用“#”或“*”查找了其它文本。

@@ -4,7 +4,9 @@
 " 相对 TagList 能更好的支持面向对象
 
 " 常规模式下输入 tb 调用插件，如果有打开 TagList 窗口则先将其关闭
-nmap tb :TlistClose<CR>:TagbarToggle<CR>
+nmap tb :TagbarToggle<CR>
+" 启动时自动focus
+let g:tagbar_autofocus = 1
 
 let g:tagbar_width=30                       "设置窗口宽度
 " let g:tagbar_left=1                         "在左侧窗口中显示
