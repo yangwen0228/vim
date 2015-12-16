@@ -21,10 +21,10 @@ let s:save_cpo = &cpo
 set cpo&vim
 
 function! SyntaxCheckers_tcl_tclchecker_GetLocList() dict
-    let makeprg = self.makeprgBuild({ 'args_after': '-H' })
+    let makeprg = self.makeprgBuild({ 'args_after': '-quiet -W3' })
 
     let errorformat =
-        \ '%f: %l\ \(%s\)\ "%m'
+        \ '%f:%l\ \(%s\)\ %m'
 
     return SyntasticMake({
         \ 'makeprg': makeprg,

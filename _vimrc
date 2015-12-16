@@ -7,6 +7,7 @@
     let g:tempfilesdir = $VIM . "/vimfiles/tempfiles"
     let g:personaldir = $VIM . "/vimfiles/personal"
     let g:utilsdir = $VIM . "/vimfiles/utils"
+    let g:vendordir = $VIM . "/vimfiles/vendor"
 " }}}
 
 

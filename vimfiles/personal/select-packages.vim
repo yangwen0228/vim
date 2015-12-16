@@ -1,4 +1,34 @@
-let s:conf_dir = g:personaldir . "/configures"
+let s:conf_dir = g:personaldir . '/configures'
+
+function! <SID>add_local_plugin(...) 
+    if a:0 == 0
+        " no args
+    else
+        " check has init file
+        if a:1 =~ 'init-' " has init file
+            if a:0 == 1 " has only one arg, the init file
+            elseif a:0 == 2 " has two args, the init file and bundle
+                let full_path = g:vendordir . '/' . a:2
+
+                exec 'set rtp^='.fnameescape(full_path)
+                exec 'set rtp+='.fnameescape(full_path . '/after')
+            elseif a:0 == 3 " the init file , bundle and bundle options
+                " bundle and options
+            endif
+            let full_path = s:conf_dir . '/' . a:1
+            exe "source" full_path
+        else " has no init files
+            if a:0 == 1 " has only one arg, the bundle
+                let full_path = g:vendordir . '/' . a:1
+
+                exec 'set rtp^='.fnameescape(full_path)
+                exec 'set rtp+='.fnameescape(full_path . '/after')
+            elseif a:0 == 2 " has two args, the bundle and options
+                " bundle and options
+            endif
+        endif
+    endif
+endfunction
 
 function! <SID>add_plugin(...) 
     if a:0 == 0
@@ -26,6 +56,7 @@ function! <SID>add_plugin(...)
     endif
 endfunction
 
+command -nargs=+ -bar MyAddLocalPlugin call <SID>add_local_plugin(<args>)
 command -nargs=+ -bar MyAddPlugin call <SID>add_plugin(<args>)
 
 " =============================================================================
@@ -54,6 +85,9 @@ MyAddPlugin 'init-zoom-win.vim', 'ZoomWin'
 " =============================================================================
 "                          << 文件及buffer插件 >>
 " =============================================================================
+MyAddPlugin 'init-vimfiler.vim', 'Shougo/vimfiler.vim'
+MyAddLocalPlugin 'init-vimfiler-prompt.vim', 'vimfiler-prompt'
+" MyAddPlugin 'romgrk/vimfiler-prompt'
 MyAddPlugin 'Shougo/unite.vim'
 MyAddPlugin 'Shougo/unite-outline'
 MyAddPlugin 'Shougo/unite-session'
@@ -132,7 +166,7 @@ MyAddPlugin 'init-quick-run.vim', 'thinca/vim-quickrun'
 " =============================================================================
 "                          << tcl语言插件 >>
 " =============================================================================
-MyAddPlugin 'init-syntastic-tcl.vim', 'file:///$VIM/vimfiles/vendor/syntastic-tcl'
+MyAddLocalPlugin 'init-syntastic-tcl.vim', 'syntastic-tcl'
 " =============================================================================
 "                          << python语言插件 >>
 " =============================================================================
